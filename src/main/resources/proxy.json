@@ -1,0 +1,42 @@
+{
+  "resource": "employee",
+  "operation": "view",
+  "validation": {
+    "query": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "title": "Product",
+      "description": "A product from the catalog",
+      "type": "object",
+      "properties": {
+        "formId": {
+          "description": "The unique identifier for a product",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "formId"
+      ]
+    }
+  },
+  "jsonTransformer": {
+    "success": [
+      {
+        "operation": "shift",
+        "spec": {
+          "data": {
+            "content": {
+              "*": {
+                "formData": {
+                  "*": "employees[#3].&"
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+
+
+}

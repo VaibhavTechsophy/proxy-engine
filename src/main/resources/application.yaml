@@ -1,0 +1,22 @@
+spring:
+  main:
+    web-application-type: NONE
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: https://keycloak-tsplatform.techsophy.com/auth/realms/techsophy-platform
+            authorization-uri: https://keycloak-tsplatform.techsophy.com/auth/realms/techsophy-platform/protocol/openid-connect/auth
+            user-info-uri: https://keycloak-tsplatform.techsophy.com/auth/realms/techsophy-platform/protocol/openid-connect/userinfo
+            token-uri:  https://keycloak-tsplatform.techsophy.com/auth/realms/techsophy-platform/protocol/openid-connect/token
+            jwk-set-uri: https://keycloak-tsplatform.techsophy.com/auth/realms/techsophy-platform/protocol/openid-connect/certs
+
+
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: camunda-identity-service
+            authorization-grant-type: "client_credentials"
+            client-secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4
+#            token-uri: https://keycloak-tsplatform.techsophy.com/auth/admin/techsophy-platform/protocol/openid-connect/token
