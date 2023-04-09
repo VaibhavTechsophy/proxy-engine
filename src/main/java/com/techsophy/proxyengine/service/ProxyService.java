@@ -9,4 +9,7 @@ import java.util.Map;
 
 public interface ProxyService {
     Mono<byte[]> callProxy(ProxyDefinition proxy,   ProxyRequest request);//String resource, String operation,
+
+    String template(String templateName);
+
 }

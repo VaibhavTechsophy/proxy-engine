@@ -12,15 +12,21 @@ import com.networknt.schema.ValidationMessage;
 import com.techsophy.proxyengine.data.ProxyDefinition;
 import com.techsophy.proxyengine.data.ProxyRequest;
 import com.techsophy.proxyengine.data.ResourceOperationDefinition;
+import com.techsophy.proxyengine.data.UserDefinition;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.stringtemplate.v4.ST;
 import reactor.core.publisher.Mono;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +34,7 @@ import java.util.Set;
 public class ProxyService implements com.techsophy.proxyengine.service.ProxyService {
     @Autowired
     private WebClient serviceClient;
+
 
 
     public Mono<byte[]> callProxy(ProxyDefinition proxy, ProxyRequest request) {
@@ -101,6 +108,23 @@ public class ProxyService implements com.techsophy.proxyengine.service.ProxyServ
 //        response.flushBuffer();
 
 
+    }
+
+    @Override
+    public String template(String templateName) {
+String template = "\n" +
+        "        {\n" +
+        "            \"filter\" : {\n" +
+        "                \"formData.field1\": { \"equals\": $user.userId$ }\n" +
+        "            }\n" +
+        "        }";
+        ST st = new ST(template,'$','$');
+        UserDefinition user = new UserDefinition();
+        user.setUserId(BigInteger.valueOf(1111111111111111L));
+        st.add("user",user);
+        String output = st.render();
+        System.out.println(output);
+        return output;
     }
 
 

@@ -9,7 +9,11 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
+	maven {
+		url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+	}
 	mavenCentral()
+	mavenLocal()
 }
 
 ext {
@@ -25,6 +29,8 @@ dependencies {
 	implementation 'com.networknt:json-schema-validator:1.0.72'
 	implementation 'com.bazaarvoice.jolt:jolt-core:0.1.7'
 	implementation 'com.bazaarvoice.jolt:json-utils:0.1.7'
+	implementation 'org.antlr:antlr4-runtime:4.11.1'
+	implementation 'org.antlr:ST4:4.3.4'
 
 	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
