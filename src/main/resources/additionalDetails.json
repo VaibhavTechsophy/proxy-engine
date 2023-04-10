@@ -1,0 +1,12 @@
+{
+  "additionalDetails" : {
+    "runtime-form-app" : {
+      "filters" : {
+        "formData1.field1" : {
+          "equals" : "<user.userId>",
+          "type" : "number"
+        }
+      }
+    }
+  }
+}

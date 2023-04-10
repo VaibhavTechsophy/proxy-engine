@@ -17,17 +17,16 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.stringtemplate.v4.ST;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -111,20 +110,20 @@ public class ProxyService implements com.techsophy.proxyengine.service.ProxyServ
     }
 
     @Override
-    public String template(String templateName) {
-String template = "\n" +
-        "        {\n" +
-        "            \"filter\" : {\n" +
-        "                \"formData.field1\": { \"equals\": $user.userId$ }\n" +
-        "            }\n" +
-        "        }";
-        ST st = new ST(template,'$','$');
+    public JsonNode template(String templateName) throws IOException {
+        String additionalDetails = new String(
+                getClass().getClassLoader().getResourceAsStream("additionalDetails.json").readAllBytes());
+        ST st = new ST(additionalDetails,'<','>');
         UserDefinition user = new UserDefinition();
         user.setUserId(BigInteger.valueOf(1111111111111111L));
         st.add("user",user);
         String output = st.render();
-        System.out.println(output);
-        return output;
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode objectMap =  mapper.readTree(output);
+        System.out.println(mapper.convertValue(objectMap,Map.class));
+        return objectMap;
     }
 
 
